@@ -15,6 +15,8 @@ public interface ClientService {
 
     ClientDto findClientDtoById(UUID uuid);
 
+    ClientDto findClientDtoByCif(String cif);
+
     Optional<Client> findClientById(UUID uuid);
 
     List<ClientDto> findAllClients();

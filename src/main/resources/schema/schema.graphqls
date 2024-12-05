@@ -1,0 +1,86 @@
+type Client {
+    id: String!
+    cif: String!
+    fullName: String!
+    age: Int
+    email: String
+    annualIncome: Float!
+    totalMonthlyDebtPayment: Float!
+    employmentStatus: EmploymentStatus
+    applications: [Application!]
+}
+
+input CreateClientInput {
+    cif: String!
+    fullName: String!
+    age: Int
+    email: String
+    annualIncome: String!
+    totalMonthlyDebtPayment: String!
+    employmentStatus: EmploymentStatus
+}
+
+input UpdateClientInput {
+    id: String!
+    cif: String!
+    fullName: String!
+    age: Int
+    email: String
+    annualIncome: String
+    totalMonthlyDebtPayment: String
+    employmentStatus: EmploymentStatus
+}
+
+type Application {
+    id: String!
+    amount: String!
+    purpose: Purpose!
+    term: Int!
+    client: Client!
+    applicationStatus: ApplicationStatus
+}
+
+input CreateApplicationInput {
+    amount: String!
+    purpose: Purpose!
+    term: Int!
+    client: String!
+}
+
+enum Purpose {
+    CONSUMER
+    MORTGAGE
+    AUTO
+    BUSINESS
+    EDUCATION
+    MEDICAL
+    REFINANCE
+    SECURED
+    UNSECURED
+    OVERDRAFT
+}
+
+enum EmploymentStatus {
+    EMPLOYED
+    SELF_EMPLOYED
+    UNEMPLOYED
+}
+
+enum ApplicationStatus {
+    REVIEWING
+    APPROVED
+    REJECTED
+}
+
+type Query {
+    getClient(id: String!): Client
+    getAllClients: [Client!]
+    getApplication(id: String!): Application
+    getAllApplications: [Application!]
+}
+
+type Mutation {
+    createApplication(input: CreateApplicationInput): Boolean
+    createClient(input: CreateClientInput): Boolean
+    updateClient(input: UpdateClientInput): Client!
+}

@@ -9,6 +9,8 @@ import java.math.BigDecimal;
 @Entity
 public class Client extends BaseEntity {
 
+    private String cif;
+
     private String fullName;
 
     private Integer age;
@@ -16,6 +18,8 @@ public class Client extends BaseEntity {
     private String email;
 
     private BigDecimal annualIncome;
+
+    private BigDecimal totalMonthlyDebtPayment;
 
     @Convert(converter = EmploymentStatusConverter.class)
     private EmploymentStatus employmentStatus;
@@ -39,12 +43,22 @@ public class Client extends BaseEntity {
 
     protected Client() {}
 
-    public Client(String fullName, Integer age, String email, BigDecimal annualIncome, EmploymentStatus employmentStatus) {
+    public Client(String cif, String fullName, Integer age, String email, BigDecimal annualIncome, BigDecimal totalMonthlyDebtPayment, EmploymentStatus employmentStatus) {
+        this.cif = cif;
         this.fullName = fullName;
         this.age = age;
         this.email = email;
         this.annualIncome = annualIncome;
+        this.totalMonthlyDebtPayment = totalMonthlyDebtPayment;
         this.employmentStatus = employmentStatus;
+    }
+
+    public String getCif() {
+        return cif;
+    }
+
+    public void setCif(String cif) {
+        this.cif = cif;
     }
 
     public String getFullName() {
@@ -77,6 +91,14 @@ public class Client extends BaseEntity {
 
     public void setAnnualIncome(BigDecimal annualIncome) {
         this.annualIncome = annualIncome;
+    }
+
+    public BigDecimal getTotalMonthlyDebtPayment() {
+        return totalMonthlyDebtPayment;
+    }
+
+    public void setTotalMonthlyDebtPayment(BigDecimal totalMonthlyDebtPayment) {
+        this.totalMonthlyDebtPayment = totalMonthlyDebtPayment;
     }
 
     public EmploymentStatus getEmploymentStatus() {

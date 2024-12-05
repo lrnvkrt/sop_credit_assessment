@@ -47,5 +47,4 @@ public class ClientController {
     public ClientModel findClientById(@PathVariable UUID id) {
         return clientAssembler.toModel(clientService.findClientDtoById(id));
     }
-
 }

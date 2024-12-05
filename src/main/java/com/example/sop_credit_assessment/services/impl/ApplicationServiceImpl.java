@@ -3,9 +3,12 @@ package com.example.sop_credit_assessment.services.impl;
 import com.example.sop_credit_assessment.dtos.ApplicationCreationDto;
 import com.example.sop_credit_assessment.dtos.ApplicationDto;
 import com.example.sop_credit_assessment.models.Application;
+import com.example.sop_credit_assessment.models.Client;
+import com.example.sop_credit_assessment.records.messages.CreditCheckRequestMessage;
 import com.example.sop_credit_assessment.repositories.ApplicationRepository;
 import com.example.sop_credit_assessment.services.ApplicationService;
 import com.example.sop_credit_assessment.services.ClientService;
+import com.example.sop_credit_assessment.services.CreditCheckRequestSender;
 import com.example.sop_credit_assessment.util.ValidationUtil;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolation;
@@ -24,6 +27,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     private ApplicationRepository applicationRepository;
     private ClientService clientService;
+    private CreditCheckRequestSender creditCheckRequestSender;
     private final ModelMapper modelMapper;
     private final ValidationUtil validationUtil;
 
@@ -42,6 +46,11 @@ public class ApplicationServiceImpl implements ApplicationService {
         this.clientService = clientService;
     }
 
+    @Autowired
+    public void setCreditCheckRequestSender(CreditCheckRequestSender creditCheckRequestSender) {
+        this.creditCheckRequestSender = creditCheckRequestSender;
+    }
+
     @Override
     public void createApplication(ApplicationCreationDto applicationCreationDto) {
         if (!this.validationUtil.isValid(applicationCreationDto)) {
@@ -56,8 +65,12 @@ public class ApplicationServiceImpl implements ApplicationService {
         Application application = modelMapper.map(applicationCreationDto, Application.class);
         application.setCreated(LocalDateTime.now());
         application.setApplicationStatus(Application.ApplicationStatus.REVIEWING);
-        application.setClient(clientService.findClientById(applicationCreationDto.getClient()).orElseThrow());
+        Client client = clientService.findClientById(applicationCreationDto.getClient()).orElseThrow();
+        application.setClient(client);
         this.applicationRepository.save(application);
+        creditCheckRequestSender.sendCreditCheckRequest(new CreditCheckRequestMessage(
+                client.getCif(), client.getAge(), client.getAnnualIncome(), client.getTotalMonthlyDebtPayment(), client.getEmploymentStatus(),
+                application.getId().toString(), application.getAmount(), application.getPurpose(), application.getTerm()));
     }
 
     @Override
@@ -93,4 +106,5 @@ public class ApplicationServiceImpl implements ApplicationService {
                 .map(application -> modelMapper.map(application, ApplicationDto.class))
                 .collect(Collectors.toList());
     }
+
 }

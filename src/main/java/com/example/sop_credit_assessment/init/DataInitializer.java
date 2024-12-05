@@ -31,7 +31,7 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        clientFactory.addClients(10).forEach(clientDto -> clientService.addClient(clientDto));
+        clientFactory.addClients(1000).forEach(clientDto -> clientService.addClient(clientDto));
         List<ClientDto> clientDtos = clientService.findAllClients();
         for (ClientDto clientDto : clientDtos) {
             clientFactory.createApplications(clientFactory.getRandomQuantity(10), clientDto.getId()).forEach(a -> applicationService.createApplication(a));

@@ -6,6 +6,8 @@ import java.math.BigDecimal;
 
 public class ClientDto extends BaseEntityDto{
 
+    private String cif;
+
     private String fullName;
 
     private Integer age;
@@ -14,20 +16,34 @@ public class ClientDto extends BaseEntityDto{
 
     private BigDecimal annualIncome;
 
+    private BigDecimal totalMonthlyDebtPayment;
+
     private Client.EmploymentStatus employmentStatus;
 
     public ClientDto() {}
 
-    public ClientDto(String fullName,
+    public ClientDto(String cif,
+                     String fullName,
                      Integer age,
                      String email,
                      BigDecimal annualIncome,
+                     BigDecimal totalMonthlyDebtPayment,
                      Client.EmploymentStatus employmentStatus) {
+        this.cif = cif;
         this.fullName = fullName;
         this.age = age;
         this.email = email;
         this.annualIncome = annualIncome;
+        this.totalMonthlyDebtPayment = totalMonthlyDebtPayment;
         this.employmentStatus = employmentStatus;
+    }
+
+    public String getCif() {
+        return cif;
+    }
+
+    public void setCif(String cif) {
+        this.cif = cif;
     }
 
     public String getFullName() {
@@ -46,9 +62,7 @@ public class ClientDto extends BaseEntityDto{
         this.age = age;
     }
 
-    public String getEmail() {
-        return email;
-    }
+    public String getEmail() { return email; }
 
     public void setEmail(String email) {
         this.email = email;
@@ -61,6 +75,10 @@ public class ClientDto extends BaseEntityDto{
     public void setAnnualIncome(BigDecimal annualIncome) {
         this.annualIncome = annualIncome;
     }
+
+    public BigDecimal getTotalMonthlyDebtPayment() { return totalMonthlyDebtPayment; }
+
+    public void setTotalMonthlyDebtPayment(BigDecimal totalMonthlyDebtPayment) { this.totalMonthlyDebtPayment = totalMonthlyDebtPayment; }
 
     public Client.EmploymentStatus getEmploymentStatus() {
         return employmentStatus;

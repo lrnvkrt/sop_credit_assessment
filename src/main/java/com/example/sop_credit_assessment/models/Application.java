@@ -1,17 +1,41 @@
 package com.example.sop_credit_assessment.models;
 
 import com.example.sop_credit_assessment.models.converters.ApplicationStatusConverter;
+import com.example.sop_credit_assessment.models.converters.PurposeConverter;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 
 @Entity
 public class Application extends BaseEntity{
 
     private BigDecimal amount;
 
-    private String purpose;
+    @Convert(converter = PurposeConverter.class)
+    private Purpose purpose;
+
+    public enum Purpose {
+        CONSUMER(0), // Потребительский кредит
+        MORTGAGE(10), // Ипотечный кредит
+        AUTO(20), // Автокредит
+        BUSINESS(30), // Кредит для бизнеса
+        EDUCATION(40), // Кредит на образование
+        MEDICAL(50), // Кредит на медицинские нужды
+        REFINANCE(60), // Рефинансирование
+        SECURED(70), // Кредит под залог
+        UNSECURED(80), // Беззалоговый кредит
+        OVERDRAFT(90); // Овердрафт
+
+        private int num;
+
+        Purpose(int num) {
+            this.num = num;
+        }
+
+        public int getNum() {
+            return num;
+        }
+    }
 
     private Integer term;
 
@@ -41,7 +65,7 @@ public class Application extends BaseEntity{
 
     protected Application() {}
 
-    public Application(BigDecimal amount, String purpose, Integer term, ApplicationStatus applicationStatus, Client client) {
+    public Application(BigDecimal amount, Purpose purpose, Integer term, ApplicationStatus applicationStatus, Client client) {
         this.amount = amount;
         this.purpose = purpose;
         this.term = term;
@@ -57,11 +81,11 @@ public class Application extends BaseEntity{
         this.amount = amount;
     }
 
-    public String getPurpose() {
+    public Purpose getPurpose() {
         return purpose;
     }
 
-    public void setPurpose(String purpose) {
+    public void setPurpose(Purpose purpose) {
         this.purpose = purpose;
     }
 

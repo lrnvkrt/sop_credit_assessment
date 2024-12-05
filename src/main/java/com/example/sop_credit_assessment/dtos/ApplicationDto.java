@@ -11,7 +11,7 @@ public class ApplicationDto extends ApplicationCreationDto{
 
     protected ApplicationDto() {}
 
-    public ApplicationDto(BigDecimal amount, String purpose, Integer term, UUID client, Application.ApplicationStatus applicationStatus) {
+    public ApplicationDto(BigDecimal amount, Application.Purpose purpose, Integer term, UUID client, Application.ApplicationStatus applicationStatus) {
         super(amount, purpose, term, client);
         this.applicationStatus = applicationStatus;
     }

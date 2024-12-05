@@ -35,6 +35,7 @@ public class ClientAssembler extends RepresentationModelAssemblerSupport<ClientD
         model.setAge(entity.getAge());
         model.setEmail(entity.getEmail());
         model.setAnnualIncome(entity.getAnnualIncome());
+        model.setTotalMonthlyDebtPayment(entity.getTotalMonthlyDebtPayment());
         model.setFullName(entity.getFullName());
         model.setEmploymentStatus(entity.getEmploymentStatus());
 

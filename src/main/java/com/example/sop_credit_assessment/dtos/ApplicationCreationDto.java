@@ -1,5 +1,7 @@
 package com.example.sop_credit_assessment.dtos;
 
+import com.example.sop_credit_assessment.models.Application;
+
 import java.math.BigDecimal;
 import java.util.UUID;
 
@@ -7,7 +9,7 @@ public class ApplicationCreationDto extends BaseEntityDto {
 
     private BigDecimal amount;
 
-    private String purpose;
+    private Application.Purpose purpose;
 
     private Integer term;
 
@@ -16,7 +18,7 @@ public class ApplicationCreationDto extends BaseEntityDto {
     protected ApplicationCreationDto() {}
 
     public ApplicationCreationDto(BigDecimal amount,
-                                  String purpose,
+                                  Application.Purpose purpose,
                                   Integer term,
                                   UUID client) {
         this.amount = amount;
@@ -33,11 +35,11 @@ public class ApplicationCreationDto extends BaseEntityDto {
         this.amount = amount;
     }
 
-    public String getPurpose() {
+    public Application.Purpose getPurpose() {
         return purpose;
     }
 
-    public void setPurpose(String purpose) {
+    public void setPurpose(Application.Purpose purpose) {
         this.purpose = purpose;
     }
 

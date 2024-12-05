@@ -78,6 +78,10 @@ public class ClientServiceImpl implements ClientService {
         return modelMapper.map(this.clientRepository.findById(uuid).orElseThrow(() -> new EntityNotFoundException("Клиента с таким ID нет!")), ClientDto.class);
     }
 
+    public ClientDto findClientDtoByCif(String cif) {
+        return modelMapper.map(this.clientRepository.findByCif(cif).orElseThrow(() -> new EntityNotFoundException("Клиента с таким уникальным номером нет!")), ClientDto.class);
+    }
+
     @Override
     public List<ClientDto> findAllClients() {
         return this.clientRepository

@@ -1,7 +1,8 @@
 package com.example.sop_credit_assessment.api.rest.controllers;
 
+import com.example.sop_contracts.models.ApplicationModel;
+import com.example.sop_contracts.requests.ApplicationCreationRequest;
 import com.example.sop_credit_assessment.api.rest.hateoas.assembler.ApplicationAssembler;
-import com.example.sop_credit_assessment.api.rest.hateoas.model.ApplicationModel;
 import com.example.sop_credit_assessment.dtos.ApplicationCreationDto;
 import com.example.sop_credit_assessment.services.ApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/applications")
-public class ApplicationController {
+public class ApplicationController implements com.example.sop_contracts.controllers.ApplicationController {
 
     private ApplicationService applicationService;
 
@@ -29,8 +30,9 @@ public class ApplicationController {
     }
 
     @PostMapping("/add")
-    void addApplication(@RequestBody ApplicationCreationDto applicationCreationDto) {
-        applicationService.createApplication(applicationCreationDto);
+    @Override
+    public void addApplication(@RequestBody ApplicationCreationRequest applicationCreationRequest) {
+        applicationService.createApplication(applicationCreationRequest);
     }
 
     @GetMapping("/{id}")
