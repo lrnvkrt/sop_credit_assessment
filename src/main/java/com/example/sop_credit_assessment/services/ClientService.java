@@ -1,6 +1,6 @@
 package com.example.sop_credit_assessment.services;
 
-import com.example.sop_credit_assessment.dtos.ClientDto;
+import com.example.sop_contracts.requests.ClientRequest;
 import com.example.sop_credit_assessment.models.Client;
 
 import java.util.List;
@@ -9,15 +9,15 @@ import java.util.UUID;
 
 public interface ClientService {
 
-    void addClient(ClientDto clientDto);
+    void addClient(ClientRequest clientDto);
 
-    ClientDto updateClient(ClientDto clientDto);
+    ClientRequest updateClient(ClientRequest clientDto);
 
-    ClientDto findClientDtoById(UUID uuid);
+    ClientRequest findClientDtoById(UUID uuid);
 
-    ClientDto findClientDtoByCif(String cif);
+    ClientRequest findClientDtoByCif(String cif);
 
     Optional<Client> findClientById(UUID uuid);
 
-    List<ClientDto> findAllClients();
+    List<ClientRequest> findAllClients();
 }

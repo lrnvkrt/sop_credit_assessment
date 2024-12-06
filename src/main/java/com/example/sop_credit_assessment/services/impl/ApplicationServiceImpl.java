@@ -1,6 +1,7 @@
 package com.example.sop_credit_assessment.services.impl;
 
-import com.example.sop_credit_assessment.dtos.ApplicationCreationDto;
+import com.example.sop_contracts.enumerations.ApplicationStatus;
+import com.example.sop_contracts.requests.ApplicationCreationRequest;
 import com.example.sop_credit_assessment.dtos.ApplicationDto;
 import com.example.sop_credit_assessment.models.Application;
 import com.example.sop_credit_assessment.models.Client;
@@ -52,20 +53,20 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public void createApplication(ApplicationCreationDto applicationCreationDto) {
-        if (!this.validationUtil.isValid(applicationCreationDto)) {
+    public void createApplication(ApplicationCreationRequest applicationCreationRequest) {
+        if (!this.validationUtil.isValid(applicationCreationRequest)) {
 
             this.validationUtil
-                    .violations(applicationCreationDto)
+                    .violations(applicationCreationRequest)
                     .stream()
                     .map(ConstraintViolation::getMessage)
                     .forEach(System.out::println);
             throw new IllegalArgumentException("Illegal argument!");
         }
-        Application application = modelMapper.map(applicationCreationDto, Application.class);
+        Application application = modelMapper.map(applicationCreationRequest, Application.class);
         application.setCreated(LocalDateTime.now());
-        application.setApplicationStatus(Application.ApplicationStatus.REVIEWING);
-        Client client = clientService.findClientById(applicationCreationDto.getClient()).orElseThrow();
+        application.setApplicationStatus(ApplicationStatus.REVIEWING);
+        Client client = clientService.findClientById(applicationCreationRequest.getClient()).orElseThrow();
         application.setClient(client);
         this.applicationRepository.save(application);
         creditCheckRequestSender.sendCreditCheckRequest(new CreditCheckRequestMessage(
@@ -74,7 +75,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public ApplicationDto updateStatus(UUID uuid, Application.ApplicationStatus status) {
+    public ApplicationDto updateStatus(UUID uuid, ApplicationStatus status) {
         Optional<Application> application = applicationRepository.findById(uuid);
         if (application.isEmpty()) {
             throw new EntityNotFoundException("Пользователя с таким ID нет: " + uuid);

@@ -1,5 +1,7 @@
 package com.example.sop_credit_assessment.models;
 
+import com.example.sop_contracts.enumerations.ApplicationStatus;
+import com.example.sop_contracts.enumerations.Purpose;
 import com.example.sop_credit_assessment.models.converters.ApplicationStatusConverter;
 import com.example.sop_credit_assessment.models.converters.PurposeConverter;
 import jakarta.persistence.*;
@@ -14,50 +16,11 @@ public class Application extends BaseEntity{
     @Convert(converter = PurposeConverter.class)
     private Purpose purpose;
 
-    public enum Purpose {
-        CONSUMER(0), // Потребительский кредит
-        MORTGAGE(10), // Ипотечный кредит
-        AUTO(20), // Автокредит
-        BUSINESS(30), // Кредит для бизнеса
-        EDUCATION(40), // Кредит на образование
-        MEDICAL(50), // Кредит на медицинские нужды
-        REFINANCE(60), // Рефинансирование
-        SECURED(70), // Кредит под залог
-        UNSECURED(80), // Беззалоговый кредит
-        OVERDRAFT(90); // Овердрафт
-
-        private int num;
-
-        Purpose(int num) {
-            this.num = num;
-        }
-
-        public int getNum() {
-            return num;
-        }
-    }
-
     private Integer term;
 
     @Convert(converter = ApplicationStatusConverter.class)
     private ApplicationStatus applicationStatus;
 
-    public enum ApplicationStatus {
-        REVIEWING(0),
-        APPROVED(10),
-        REJECTED(20);
-
-        private int num;
-
-        ApplicationStatus(int num) {
-            this.num = num;
-        }
-
-        public int getNum() {
-            return num;
-        }
-
-    }
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "client_id", referencedColumnName = "id", nullable = false)

@@ -1,8 +1,8 @@
 package com.example.sop_credit_assessment.api.graphql.datafetchers;
 
 
+import com.example.sop_contracts.requests.ClientRequest;
 import com.example.sop_credit_assessment.dtos.ApplicationDto;
-import com.example.sop_credit_assessment.dtos.ClientDto;
 import com.example.sop_credit_assessment.services.ClientService;
 import com.netflix.graphql.dgs.*;
 
@@ -20,18 +20,18 @@ public class ClientDataFetcher {
     }
 
     @DgsQuery
-    public List<ClientDto> getAllClients() {
+    public List<ClientRequest> getAllClients() {
         return clientService.findAllClients();
     }
 
     @DgsQuery
-    public ClientDto getClient(@InputArgument String id) {
+    public ClientRequest getClient(@InputArgument String id) {
         UUID clientId = UUID.fromString(Objects.requireNonNull(id));
         return clientService.findClientDtoById(clientId);
     }
 
     @DgsData(parentType = "Application", field = "client")
-    public ClientDto getClientByApplication(DgsDataFetchingEnvironment ddfe) {
+    public ClientRequest getClientByApplication(DgsDataFetchingEnvironment ddfe) {
         ApplicationDto applicationDto = ddfe.getSource();
         return clientService.findClientDtoById(Objects.requireNonNull(applicationDto).getClient());
     }

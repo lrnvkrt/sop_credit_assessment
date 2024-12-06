@@ -1,6 +1,6 @@
 package com.example.sop_credit_assessment.init;
 
-import com.example.sop_credit_assessment.dtos.ClientDto;
+import com.example.sop_contracts.requests.ClientRequest;
 import com.example.sop_credit_assessment.init.factories.ClientFactory;
 import com.example.sop_credit_assessment.services.impl.ApplicationServiceImpl;
 import com.example.sop_credit_assessment.services.impl.ClientServiceImpl;
@@ -32,8 +32,8 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) {
         clientFactory.addClients(1000).forEach(clientDto -> clientService.addClient(clientDto));
-        List<ClientDto> clientDtos = clientService.findAllClients();
-        for (ClientDto clientDto : clientDtos) {
+        List<ClientRequest> clientDtos = clientService.findAllClients();
+        for (ClientRequest clientDto : clientDtos) {
             clientFactory.createApplications(clientFactory.getRandomQuantity(10), clientDto.getId()).forEach(a -> applicationService.createApplication(a));
         }
         System.out.println(clientService.findAllClients());

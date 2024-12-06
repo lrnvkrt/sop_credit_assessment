@@ -1,12 +1,13 @@
 package com.example.sop_credit_assessment.models.converters;
 
-import com.example.sop_credit_assessment.models.Application;
-import com.example.sop_credit_assessment.models.Client;
+import com.example.sop_contracts.enumerations.ApplicationStatus;
 import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 
-public class ApplicationStatusConverter implements AttributeConverter<Application.ApplicationStatus, Integer> {
+@Converter
+public class ApplicationStatusConverter implements AttributeConverter<ApplicationStatus, Integer> {
     @Override
-    public Integer convertToDatabaseColumn(Application.ApplicationStatus applicationStatus) {
+    public Integer convertToDatabaseColumn(ApplicationStatus applicationStatus) {
         if (applicationStatus == null) {
             return null;
         }
@@ -14,9 +15,9 @@ public class ApplicationStatusConverter implements AttributeConverter<Applicatio
     }
 
     @Override
-    public Application.ApplicationStatus convertToEntityAttribute(Integer integer) {
-        Application.ApplicationStatus[] applicationStatuses = Application.ApplicationStatus.class.getEnumConstants();
-        for (Application.ApplicationStatus applicationStatus: applicationStatuses) {
+    public ApplicationStatus convertToEntityAttribute(Integer integer) {
+        ApplicationStatus[] applicationStatuses = ApplicationStatus.class.getEnumConstants();
+        for (ApplicationStatus applicationStatus: applicationStatuses) {
             if (applicationStatus.getNum() == integer) {
                 return applicationStatus;
             }

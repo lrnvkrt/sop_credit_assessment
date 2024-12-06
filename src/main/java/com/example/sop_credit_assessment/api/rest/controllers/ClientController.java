@@ -1,8 +1,8 @@
 package com.example.sop_credit_assessment.api.rest.controllers;
 
+import com.example.sop_contracts.models.ClientModel;
+import com.example.sop_contracts.requests.ClientRequest;
 import com.example.sop_credit_assessment.api.rest.hateoas.assembler.ClientAssembler;
-import com.example.sop_credit_assessment.api.rest.hateoas.model.ClientModel;
-import com.example.sop_credit_assessment.dtos.ClientDto;
 import com.example.sop_credit_assessment.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/clients")
-public class ClientController {
+public class ClientController implements com.example.sop_contracts.controllers.ClientController {
 
     private ClientService clientService;
 
@@ -29,22 +29,26 @@ public class ClientController {
     }
 
     @PostMapping("/add")
-    public void addClient(@RequestBody ClientDto clientDto) {
+    @Override
+    public void addClient(@RequestBody ClientRequest clientDto) {
         clientService.addClient(clientDto);
     }
 
     @PostMapping("/update")
-    public ClientModel updateClient(@RequestBody ClientDto clientDto) {
+    @Override
+    public ClientModel updateClient(@RequestBody ClientRequest clientDto) {
         return clientAssembler.toModel(clientService.updateClient(clientDto));
     }
 
     @GetMapping("/all")
+    @Override
     public CollectionModel<ClientModel> getAllClients() {
         return clientAssembler.toCollectionModel(clientService.findAllClients());
     }
 
     @GetMapping("/{id}")
-    public ClientModel findClientById(@PathVariable UUID id) {
+    @Override
+    public ClientModel getClientById(@PathVariable UUID id) {
         return clientAssembler.toModel(clientService.findClientDtoById(id));
     }
 }

@@ -1,6 +1,6 @@
 package com.example.sop_credit_assessment.records.graphql;
 
-import com.example.sop_credit_assessment.models.Client;
+import com.example.sop_contracts.enumerations.EmploymentStatus;
 
 public record UpdateClientInput(
         String id,
@@ -10,5 +10,5 @@ public record UpdateClientInput(
         String email,
         String annualIncome,
         String totalMonthlyDebtPayment,
-        Client.EmploymentStatus employmentStatus
+        EmploymentStatus employmentStatus
 ) {}

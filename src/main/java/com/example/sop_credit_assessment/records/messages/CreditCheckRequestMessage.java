@@ -1,7 +1,7 @@
 package com.example.sop_credit_assessment.records.messages;
 
-import com.example.sop_credit_assessment.models.Application;
-import com.example.sop_credit_assessment.models.Client;
+import com.example.sop_contracts.enumerations.EmploymentStatus;
+import com.example.sop_contracts.enumerations.Purpose;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -11,9 +11,9 @@ public record CreditCheckRequestMessage(
         Integer age,
         BigDecimal annualIncome,
         BigDecimal totalMonthlyDebtPayment,
-        Client.EmploymentStatus employmentStatus,
+        EmploymentStatus employmentStatus,
         String referenceId,
         BigDecimal amount,
-        Application.Purpose purpose,
+        Purpose purpose,
         Integer term
 ) implements Serializable {}

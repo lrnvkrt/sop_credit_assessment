@@ -1,7 +1,7 @@
 package com.example.sop_credit_assessment.api.graphql.mutations;
 
 
-import com.example.sop_credit_assessment.dtos.ApplicationCreationDto;
+import com.example.sop_contracts.requests.ApplicationCreationRequest;
 import com.example.sop_credit_assessment.records.graphql.CreateApplicationInput;
 import com.example.sop_credit_assessment.services.ApplicationService;
 import com.netflix.graphql.dgs.DgsComponent;
@@ -22,7 +22,7 @@ public class ApplicationMutation {
     
     @DgsMutation
     public Boolean createApplication(@InputArgument("input") CreateApplicationInput createApplicationInput) {
-        applicationService.createApplication(new ApplicationCreationDto(new BigDecimal(createApplicationInput.amount()), createApplicationInput.purpose(), createApplicationInput.term(), UUID.fromString(createApplicationInput.client())));
+        applicationService.createApplication(new ApplicationCreationRequest(new BigDecimal(createApplicationInput.amount()), createApplicationInput.purpose(), createApplicationInput.term(), UUID.fromString(createApplicationInput.client())));
         return true;
     }
 }

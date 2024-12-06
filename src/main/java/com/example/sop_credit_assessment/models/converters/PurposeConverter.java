@@ -1,12 +1,14 @@
 package com.example.sop_credit_assessment.models.converters;
 
-import com.example.sop_credit_assessment.models.Application;
+import com.example.sop_contracts.enumerations.Purpose;
 import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 
-public class PurposeConverter implements AttributeConverter<Application.Purpose, Integer> {
+@Converter
+public class PurposeConverter implements AttributeConverter<Purpose, Integer> {
 
     @Override
-    public Integer convertToDatabaseColumn(Application.Purpose purpose) {
+    public Integer convertToDatabaseColumn(Purpose purpose) {
         if (purpose == null) {
             return null;
         }
@@ -14,9 +16,9 @@ public class PurposeConverter implements AttributeConverter<Application.Purpose,
     }
 
     @Override
-    public Application.Purpose convertToEntityAttribute(Integer integer) {
-        Application.Purpose[] purposes = Application.Purpose.class.getEnumConstants();
-        for (Application.Purpose purpose: purposes) {
+    public Purpose convertToEntityAttribute(Integer integer) {
+        Purpose[] purposes = Purpose.class.getEnumConstants();
+        for (Purpose purpose: purposes) {
             if (purpose.getNum() == integer) {
                 return purpose;
             }

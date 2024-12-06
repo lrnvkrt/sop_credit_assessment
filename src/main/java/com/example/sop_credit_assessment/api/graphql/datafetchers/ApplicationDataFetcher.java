@@ -1,7 +1,7 @@
 package com.example.sop_credit_assessment.api.graphql.datafetchers;
 
+import com.example.sop_contracts.requests.ClientRequest;
 import com.example.sop_credit_assessment.dtos.ApplicationDto;
-import com.example.sop_credit_assessment.dtos.ClientDto;
 import com.example.sop_credit_assessment.services.ApplicationService;
 import com.netflix.graphql.dgs.*;
 import org.jetbrains.annotations.NotNull;
@@ -32,7 +32,7 @@ public class ApplicationDataFetcher {
 
     @DgsData(parentType = "Client", field = "applications")
     public List<ApplicationDto> getApplicationsByClient(@NotNull DgsDataFetchingEnvironment ddfe) {
-        ClientDto clientDto = ddfe.getSource();
+        ClientRequest clientDto = ddfe.getSource();
         return applicationService.findAllApplicationsByClient(Objects.requireNonNull(clientDto).getId());
     }
 }

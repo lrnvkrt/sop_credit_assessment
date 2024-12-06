@@ -1,6 +1,6 @@
 package com.example.sop_credit_assessment.config;
 
-import com.example.sop_credit_assessment.dtos.ApplicationCreationDto;
+import com.example.sop_contracts.requests.ApplicationCreationRequest;
 import com.example.sop_credit_assessment.dtos.ApplicationDto;
 import com.example.sop_credit_assessment.models.Application;
 import org.modelmapper.ModelMapper;
@@ -13,9 +13,9 @@ public class ModelConfig {
     @Bean
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
-        TypeMap<Application, ApplicationCreationDto> applicationCreationDtoPropertyMapper = modelMapper.createTypeMap(Application.class, ApplicationCreationDto.class);
+        TypeMap<Application, ApplicationCreationRequest> applicationCreationDtoPropertyMapper = modelMapper.createTypeMap(Application.class, ApplicationCreationRequest.class);
         applicationCreationDtoPropertyMapper.addMapping(
-                application -> application.getClient().getId(), ApplicationCreationDto::setClient
+                application -> application.getClient().getId(), ApplicationCreationRequest::setClient
         );
         TypeMap<Application, ApplicationDto> applicationDtoPropertyMapper = modelMapper.createTypeMap(Application.class, ApplicationDto.class);
         applicationDtoPropertyMapper.addMapping(

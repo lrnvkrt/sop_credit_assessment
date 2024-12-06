@@ -1,7 +1,7 @@
 package com.example.sop_credit_assessment.api.graphql.mutations;
 
 
-import com.example.sop_credit_assessment.dtos.ClientDto;
+import com.example.sop_contracts.requests.ClientRequest;
 import com.example.sop_credit_assessment.records.graphql.CreateClientInput;
 import com.example.sop_credit_assessment.records.graphql.UpdateClientInput;
 import com.example.sop_credit_assessment.services.ClientService;
@@ -23,7 +23,7 @@ public class ClientMutation {
 
     @DgsMutation
     public Boolean createClient(@InputArgument("input") CreateClientInput createClientInput) {
-        clientService.addClient(new ClientDto(createClientInput.cif(),
+        clientService.addClient(new ClientRequest(createClientInput.cif(),
                                                 createClientInput.fullName(),
                                                 createClientInput.age(),
                                                 createClientInput.email(),
@@ -34,8 +34,8 @@ public class ClientMutation {
     }
 
     @DgsMutation
-    public ClientDto updateClient(@InputArgument("input") UpdateClientInput updateClientInput) {
-        ClientDto clientDto = new ClientDto();
+    public ClientRequest updateClient(@InputArgument("input") UpdateClientInput updateClientInput) {
+        ClientRequest clientDto = new ClientRequest();
         clientDto.setId(UUID.fromString(updateClientInput.id()));
         clientDto.setCif(updateClientInput.cif());
         clientDto.setFullName(updateClientInput.fullName());

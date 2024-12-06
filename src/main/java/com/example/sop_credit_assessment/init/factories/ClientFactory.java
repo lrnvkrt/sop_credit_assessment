@@ -1,9 +1,9 @@
 package com.example.sop_credit_assessment.init.factories;
 
-import com.example.sop_credit_assessment.dtos.ApplicationCreationDto;
-import com.example.sop_credit_assessment.dtos.ClientDto;
-import com.example.sop_credit_assessment.models.Application;
-import com.example.sop_credit_assessment.models.Client;
+import com.example.sop_contracts.enumerations.EmploymentStatus;
+import com.example.sop_contracts.enumerations.Purpose;
+import com.example.sop_contracts.requests.ApplicationCreationRequest;
+import com.example.sop_contracts.requests.ClientRequest;
 import com.github.javafaker.Faker;
 import org.springframework.stereotype.Component;
 
@@ -18,22 +18,22 @@ import java.util.stream.IntStream;
 public class ClientFactory {
     private final Faker faker;
 
-    private final Client.EmploymentStatus[] employmentStatuses = Client.EmploymentStatus.values();
-    private final Application.Purpose[] purposes = Application.Purpose.values();
+    private final EmploymentStatus[] employmentStatuses = EmploymentStatus.values();
+    private final Purpose[] purposes = Purpose.values();
 
     public ClientFactory() { this.faker = new Faker(Locale.ENGLISH); }
 
-    public ApplicationCreationDto createApplication(UUID client) {
-        return new ApplicationCreationDto(
+    public ApplicationCreationRequest createApplication(UUID client) {
+        return new ApplicationCreationRequest(
                 BigDecimal.valueOf(faker.random().nextInt(100, 100000000)),
-                purposes[faker.random().nextInt(0, purposes.length)-1],
+                purposes[faker.random().nextInt(1, purposes.length)-1],
                 faker.random().nextInt(1, 360),
                 client
         );
     }
 
-    public ClientDto createClient() {
-        return new ClientDto(
+    public ClientRequest createClient() {
+        return new ClientRequest(
                 faker.number().digits(10),
                 faker.name().fullName(),
                 faker.random().nextInt(18, 85),
@@ -44,11 +44,11 @@ public class ClientFactory {
         );
     }
 
-    public List<ApplicationCreationDto> createApplications(int quantity, UUID client) {
+    public List<ApplicationCreationRequest> createApplications(int quantity, UUID client) {
         return IntStream.range(0, quantity).mapToObj(i -> createApplication(client)).collect(Collectors.toList());
     }
 
-    public List<ClientDto> addClients(int quantity) {
+    public List<ClientRequest> addClients(int quantity) {
         return IntStream.range(0, quantity).mapToObj(i -> createClient()).collect(Collectors.toList());
     }
 

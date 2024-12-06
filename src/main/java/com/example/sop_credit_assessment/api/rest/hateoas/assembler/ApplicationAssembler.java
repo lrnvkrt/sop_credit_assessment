@@ -23,7 +23,7 @@ public class ApplicationAssembler extends RepresentationModelAssemblerSupport<Ap
     @NonNull
     public ApplicationModel toModel(@NonNull ApplicationDto entity) {
         ApplicationModel model = createModelWithId(entity.getId(), entity);
-        model.add(linkTo(methodOn(ClientController.class).findClientById(entity.getClient())).withRel("client"));
+        model.add(linkTo(methodOn(ClientController.class).getClientById(entity.getClient())).withRel("client"));
         model.setAmount(entity.getAmount());
         model.setPurpose(entity.getPurpose());
         model.setTerm(entity.getTerm());

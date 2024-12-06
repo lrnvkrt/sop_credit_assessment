@@ -3,7 +3,6 @@ package com.example.sop_credit_assessment.api.rest.controllers;
 import com.example.sop_contracts.models.ApplicationModel;
 import com.example.sop_contracts.requests.ApplicationCreationRequest;
 import com.example.sop_credit_assessment.api.rest.hateoas.assembler.ApplicationAssembler;
-import com.example.sop_credit_assessment.dtos.ApplicationCreationDto;
 import com.example.sop_credit_assessment.services.ApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
@@ -36,16 +35,19 @@ public class ApplicationController implements com.example.sop_contracts.controll
     }
 
     @GetMapping("/{id}")
+    @Override
     public ApplicationModel getApplication(@PathVariable UUID id) {
         return applicationAssembler.toModel(applicationService.findById(id));
     }
 
     @GetMapping("/client/{id}")
-    public CollectionModel<ApplicationModel> getApplicationsByClient(@PathVariable UUID id) {
+    @Override
+    public CollectionModel<ApplicationModel> getAllApplicationsByClient(@PathVariable UUID id) {
         return applicationAssembler.toCollectionModel(applicationService.findAllApplicationsByClient(id));
     }
 
     @GetMapping("/all")
+    @Override
     public CollectionModel<ApplicationModel> getAllApplications() {
         return applicationAssembler.toCollectionModel(applicationService.findAllApplications());
     }

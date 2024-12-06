@@ -1,9 +1,9 @@
 package com.example.sop_credit_assessment.api.rest.hateoas.assembler;
 
+import com.example.sop_contracts.models.ClientModel;
+import com.example.sop_contracts.requests.ClientRequest;
 import com.example.sop_credit_assessment.api.rest.controllers.ApplicationController;
 import com.example.sop_credit_assessment.api.rest.controllers.ClientController;
-import com.example.sop_credit_assessment.api.rest.hateoas.model.ClientModel;
-import com.example.sop_credit_assessment.dtos.ClientDto;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 @Component
-public class ClientAssembler extends RepresentationModelAssemblerSupport<ClientDto, ClientModel> {
+public class ClientAssembler extends RepresentationModelAssemblerSupport<ClientRequest, ClientModel> {
 
     public ClientAssembler() {
         super(ClientController.class, ClientModel.class);
@@ -19,10 +19,10 @@ public class ClientAssembler extends RepresentationModelAssemblerSupport<ClientD
 
     @Override
     @NonNull
-    public ClientModel toModel(@NonNull ClientDto entity) {
+    public ClientModel toModel(@NonNull ClientRequest entity) {
         ClientModel model = createModelWithId(entity.getId(), entity);
         model.add(linkTo(methodOn(ApplicationController.class)
-                .getApplicationsByClient(entity.getId()))
+                .getAllApplicationsByClient(entity.getId()))
                 .withRel("applications"));
 
         model.add(linkTo(methodOn(ClientController.class)

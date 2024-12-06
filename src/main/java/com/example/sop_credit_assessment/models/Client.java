@@ -1,5 +1,6 @@
 package com.example.sop_credit_assessment.models;
 
+import com.example.sop_contracts.enumerations.EmploymentStatus;
 import com.example.sop_credit_assessment.models.converters.EmploymentStatusConverter;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
@@ -24,22 +25,6 @@ public class Client extends BaseEntity {
     @Convert(converter = EmploymentStatusConverter.class)
     private EmploymentStatus employmentStatus;
 
-    public enum EmploymentStatus {
-        EMPLOYED(0),
-        SELF_EMPLOYED(10),
-        UNEMPLOYED(20);
-
-        private int num;
-
-        EmploymentStatus(int num) {
-            this.num = num;
-        }
-
-        public int getNum() {
-            return num;
-        }
-
-    }
 
     protected Client() {}
 

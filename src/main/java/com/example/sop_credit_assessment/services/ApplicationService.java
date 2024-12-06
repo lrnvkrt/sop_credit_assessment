@@ -1,7 +1,7 @@
 package com.example.sop_credit_assessment.services;
 
+import com.example.sop_contracts.enumerations.ApplicationStatus;
 import com.example.sop_contracts.requests.ApplicationCreationRequest;
-import com.example.sop_credit_assessment.dtos.ApplicationCreationDto;
 import com.example.sop_credit_assessment.dtos.ApplicationDto;
 import com.example.sop_credit_assessment.models.Application;
 
@@ -12,7 +12,7 @@ public interface ApplicationService {
 
     void createApplication(ApplicationCreationRequest applicationCreationRequest);
 
-    ApplicationDto updateStatus(UUID uuid, Application.ApplicationStatus status);
+    ApplicationDto updateStatus(UUID uuid, ApplicationStatus status);
 
     ApplicationDto findById(UUID uuid);
 

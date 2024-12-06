@@ -1,6 +1,6 @@
 package com.example.sop_credit_assessment.services.impl;
 
-import com.example.sop_credit_assessment.dtos.ClientDto;
+import com.example.sop_contracts.requests.ClientRequest;
 import com.example.sop_credit_assessment.models.Client;
 import com.example.sop_credit_assessment.repositories.ClientRepository;
 import com.example.sop_credit_assessment.services.ClientService;
@@ -37,7 +37,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public void addClient(ClientDto clientDto) {
+    public void addClient(ClientRequest clientDto) {
         if (!this.validationUtil.isValid(clientDto)) {
 
             this.validationUtil
@@ -53,7 +53,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public ClientDto updateClient(ClientDto clientDto) {
+    public ClientRequest updateClient(ClientRequest clientDto) {
         if (!this.validationUtil.isValid(clientDto)) {
 
             this.validationUtil
@@ -70,24 +70,24 @@ public class ClientServiceImpl implements ClientService {
         Client client = modelMapper.map(clientDto, Client.class);
         client.setCreated(oldClient.get().getCreated());
         client.setModified(LocalDateTime.now());
-        return modelMapper.map(this.clientRepository.save(client), ClientDto.class);
+        return modelMapper.map(this.clientRepository.save(client), ClientRequest.class);
     }
 
     @Override
-    public ClientDto findClientDtoById(UUID uuid) {
-        return modelMapper.map(this.clientRepository.findById(uuid).orElseThrow(() -> new EntityNotFoundException("Клиента с таким ID нет!")), ClientDto.class);
+    public ClientRequest findClientDtoById(UUID uuid) {
+        return modelMapper.map(this.clientRepository.findById(uuid).orElseThrow(() -> new EntityNotFoundException("Клиента с таким ID нет!")), ClientRequest.class);
     }
 
-    public ClientDto findClientDtoByCif(String cif) {
-        return modelMapper.map(this.clientRepository.findByCif(cif).orElseThrow(() -> new EntityNotFoundException("Клиента с таким уникальным номером нет!")), ClientDto.class);
+    public ClientRequest findClientDtoByCif(String cif) {
+        return modelMapper.map(this.clientRepository.findByCif(cif).orElseThrow(() -> new EntityNotFoundException("Клиента с таким уникальным номером нет!")), ClientRequest.class);
     }
 
     @Override
-    public List<ClientDto> findAllClients() {
+    public List<ClientRequest> findAllClients() {
         return this.clientRepository
                 .findAll()
                 .stream()
-                .map(client -> modelMapper.map(client, ClientDto.class))
+                .map(client -> modelMapper.map(client, ClientRequest.class))
                 .collect(Collectors.toList());
     }
 
