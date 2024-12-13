@@ -26,7 +26,7 @@ public class ClientFactory {
     public ApplicationCreationRequest createApplication(UUID client) {
         return new ApplicationCreationRequest(
                 BigDecimal.valueOf(faker.random().nextInt(100, 100000000)),
-                purposes[faker.random().nextInt(1, purposes.length)-1],
+                purposes[faker.random().nextInt(0, purposes.length-1)],
                 faker.random().nextInt(1, 360),
                 client
         );

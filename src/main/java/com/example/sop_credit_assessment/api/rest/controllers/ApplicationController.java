@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8083")
 @RequestMapping("/applications")
 public class ApplicationController implements com.example.sop_contracts.controllers.ApplicationController {
 

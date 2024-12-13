@@ -15,10 +15,10 @@ public class RabbitMQConfiguration {
     static final String exchangeName = "applicationExchange";
 
     @Bean
-    public Queue queue() { return new Queue(queueName, false); }
+    public Queue queue() { return new Queue(queueName, true); }
 
     @Bean
-    Exchange exchange() { return new TopicExchange(exchangeName, false, false); }
+    Exchange exchange() { return new TopicExchange(exchangeName, true, false); }
 
     @Bean
     Binding binding(Queue queue, Exchange exchange) {

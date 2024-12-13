@@ -17,6 +17,6 @@ public class CreditCheckRequestSenderImpl implements CreditCheckRequestSender {
 
     @Override
     public void sendCreditCheckRequest(CreditCheckRequestMessage message) {
-//        rabbitTemplate.convertAndSend(exchangeName, "application.creation", message);
+       rabbitTemplate.convertAndSend(exchangeName, "application.creation", message);
     }
 }
